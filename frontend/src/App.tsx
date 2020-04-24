@@ -5,10 +5,12 @@ import SignUp from './pages/SignUp';
 
 import GlobalStyle from './styles/global';
 
+import ToastContainer from './components/ToastContainer';
 import { AuthProvider } from './hooks/AuthContext';
 
 const App: React.FC = () => (
   <>
+    <ToastContainer />
     <AuthProvider>
       <SignIn />
     </AuthProvider>
