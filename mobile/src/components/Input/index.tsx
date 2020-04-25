@@ -3,6 +3,8 @@ import React, {
   useRef,
   useImperativeHandle,
   forwardRef,
+  useState,
+  useMemo,
 } from 'react';
 import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
@@ -26,11 +28,28 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   { name, icon, ...rest },
   ref,
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const inputElementRef = useRef<any>(null);
 
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
 
   const InputValueRef = useRef<InputValueReference>({ value: defaultValue });
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
+  const handleInputFocus = (): void => setIsFocused(true);
+
+  const handleInputBlur = (): void => {
+    setIsFocused(false);
+
+    setIsFilled(!!InputValueRef.current.value);
+  };
+
+  const iconColor = useMemo(
+    () => (isFocused || isFilled ? '#ff9000' : '#666360'),
+    [isFilled, isFocused],
+  );
 
   useImperativeHandle(ref, () => ({
     focus() {
@@ -43,7 +62,8 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       name: fieldName,
       ref: InputValueRef.current,
       path: 'value',
-      setValue(ref: any, value) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setValue(_ref: any, value) {
         InputValueRef.current.value = value;
         inputElementRef.current.setNativeProps({ text: value });
       },
@@ -55,14 +75,16 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }, [fieldName, registerField]);
 
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    <Container isFocused={isFocused}>
+      <Icon name={icon} size={20} color={iconColor} />
 
       <TextInput
         ref={inputElementRef}
         placeholderTextColor="#666360"
         keyboardAppearance="dark"
         defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onChangeText={(value) => {
           InputValueRef.current.value = value;
         }}
