@@ -21,11 +21,11 @@ class Appointment {
   @Column('timestamp with time zone')
   date: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'provider_id' })
