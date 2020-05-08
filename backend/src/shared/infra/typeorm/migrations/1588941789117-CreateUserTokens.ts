@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUsers1587555500361 implements MigrationInterface {
+export default class CreateUserTokens1588941789117
+  implements MigrationInterface {
   private table = new Table({
-    name: 'users',
+    name: 'user_tokens',
     columns: [
       {
         name: 'id',
@@ -12,21 +13,14 @@ export default class CreateUsers1587555500361 implements MigrationInterface {
         default: 'uuid_generate_v4()',
       },
       {
-        name: 'name',
-        type: 'varchar',
-        isNullable: false,
+        name: 'token',
+        type: 'uuid',
+        generationStrategy: 'uuid',
+        default: 'uuid_generate_v4()',
       },
       {
-        name: 'email',
-        type: 'varchar',
-        isUnique: true,
-        isNullable: false,
-      },
-      {
-        name: 'password',
-        type: 'varchar',
-        isUnique: true,
-        isNullable: false,
+        name: 'user_id',
+        type: 'uuid',
       },
       {
         name: 'updated_at',
@@ -39,6 +33,16 @@ export default class CreateUsers1587555500361 implements MigrationInterface {
         type: 'timestamp',
         default: 'now()',
         isNullable: false,
+      },
+    ],
+    foreignKeys: [
+      {
+        name: 'TokenUser',
+        referencedTableName: 'users',
+        referencedColumnNames: ['id'],
+        columnNames: ['user_id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
     ],
   });

@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class AlterProviderFieldToProviderId1587557205686
+export default class AlterProviderFieldToProviderId1587557205686
   implements MigrationInterface {
   private tableName = 'appointments';
 
