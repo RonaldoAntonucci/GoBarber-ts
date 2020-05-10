@@ -1,20 +1,20 @@
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
-import ListProviderMonthAvailabillityService from './ListProviderMonthAvailabillityService';
+import ListProviderMonthAvailabilityService from './ListProviderMonthAvailabilityService';
 
-describe('ListProviderMonthAvailabillityService', () => {
+describe('ListProviderMonthAvailabilityService', () => {
   let appointmentsRepo: IAppointmentsRepository;
-  let service: ListProviderMonthAvailabillityService;
+  let service: ListProviderMonthAvailabilityService;
 
   beforeEach(() => {
     appointmentsRepo = new FakeAppointmentsRepository();
-    service = new ListProviderMonthAvailabillityService(appointmentsRepo);
+    service = new ListProviderMonthAvailabilityService(appointmentsRepo);
   });
 
   it('should be able to list the month availability from provider', async () => {
     const providerId = 'uuid';
-    const findAvailabillity = jest
+    const findAvailability = jest
       .spyOn(appointmentsRepo, 'findAllInMonthFromProvider')
       .mockImplementation(async () => {
         const appointment8 = new Appointment();
@@ -110,7 +110,7 @@ describe('ListProviderMonthAvailabillityService', () => {
         },
       ]),
     );
-    expect(findAvailabillity).toBeCalledWith({
+    expect(findAvailability).toBeCalledWith({
       provider_id: 'uuid',
       month: 5,
       year: 2020,
