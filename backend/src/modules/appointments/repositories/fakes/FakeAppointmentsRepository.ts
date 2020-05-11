@@ -54,12 +54,14 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
   public async create({
     provider_id,
     date,
+    user_id,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointment = new Appointment();
 
     Object.assign(appointment, {
       id: uuid(),
       provider_id,
+      user_id,
       date,
       createdAt: new Date(),
       updatedAt: new Date(),
