@@ -5,13 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
-  PrimaryColumn,
 } from 'typeorm';
 
 @Entity({ name: 'notifications' })
 export default class Notification {
   @ObjectIdColumn({ primary: true })
-  @PrimaryColumn()
   id: ObjectID;
 
   @Column()
