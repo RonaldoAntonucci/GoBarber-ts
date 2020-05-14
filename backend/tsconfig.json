@@ -19,5 +19,13 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true
-  }
+  },
+  "exclude": [
+    "coverage",
+    "dist",
+    "node_modules",
+    ".vscode",
+    "tmp",
+    "jest.config.js"
+  ]
 }
