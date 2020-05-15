@@ -1,15 +1,19 @@
 import IUsersRepository from '@modules/users/repositories/IUserRepository';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProvidersService from './ListProvidersService';
 
 describe('ListProvidersService', () => {
   let repo: IUsersRepository;
+  let cacheProvider: ICacheProvider;
   let service: ListProvidersService;
 
   beforeEach(() => {
     repo = new FakeUsersRepository();
-    service = new ListProvidersService(repo);
+    cacheProvider = new FakeCacheProvider();
+    service = new ListProvidersService(repo, cacheProvider);
   });
 
   it('should be able to list the providers', async () => {

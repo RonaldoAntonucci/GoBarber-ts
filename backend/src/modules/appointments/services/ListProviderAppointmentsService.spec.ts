@@ -1,3 +1,5 @@
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
@@ -5,11 +7,16 @@ import ListProviderAppointmentsService from './ListProviderAppointmentsService';
 
 describe('ListProviderAppointmentsService', () => {
   let appointmentsRepo: IAppointmentsRepository;
+  let cacheProvider: ICacheProvider;
   let service: ListProviderAppointmentsService;
 
   beforeEach(() => {
     appointmentsRepo = new FakeAppointmentsRepository();
-    service = new ListProviderAppointmentsService(appointmentsRepo);
+    cacheProvider = new FakeCacheProvider();
+    service = new ListProviderAppointmentsService(
+      appointmentsRepo,
+      cacheProvider,
+    );
   });
 
   it('should be able to list the appointments on a specific day.', async () => {

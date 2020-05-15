@@ -7,17 +7,25 @@ import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificationsRepository';
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 describe('Create Appointment', () => {
   let service: CreateAppointmentService;
   let repo: IAppointmentsRepository;
+  let cacheProvider: ICacheProvider;
   let notificationsRepo: INotificationsRepository;
 
   beforeEach(() => {
     repo = new FakeAppointmentsRepository();
     notificationsRepo = new FakeNotificationsRepository();
-    service = new CreateAppointmentService(repo, notificationsRepo);
+    cacheProvider = new FakeCacheProvider();
+    service = new CreateAppointmentService(
+      repo,
+      notificationsRepo,
+      cacheProvider,
+    );
   });
 
   it('should be able to create a new appointment.', async () => {
@@ -29,6 +37,7 @@ describe('Create Appointment', () => {
     });
 
     const createNotification = jest.spyOn(notificationsRepo, 'create');
+    const invalidateCache = jest.spyOn(cacheProvider, 'invalidate');
 
     const appointment = await service.run({
       date: new Date(2020, 4, 10, 13),
@@ -41,6 +50,7 @@ describe('Create Appointment', () => {
     expect(appointment).toHaveProperty('provider_id', provider_id);
     expect(appointment).toHaveProperty('user_id', user_id);
     expect(createNotification).toBeCalled();
+    expect(invalidateCache).toBeCalled();
   });
 
   it('should not be able to create two appointments on the same time.', async () => {
