@@ -19,7 +19,7 @@ export default class addUserIdToAppointments1589136372915
     name: 'AppointmentUser',
     columnNames: ['user_id'],
     referencedColumnNames: ['id'],
-    referencedTableName: 'appointments',
+    referencedTableName: 'users',
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   });
