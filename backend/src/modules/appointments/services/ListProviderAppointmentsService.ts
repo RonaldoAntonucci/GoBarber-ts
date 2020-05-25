@@ -12,7 +12,7 @@ interface IRequest {
   day: number;
 }
 
-injectable();
+@injectable()
 export default class ListProviderAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')

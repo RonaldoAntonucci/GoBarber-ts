@@ -14,7 +14,7 @@ type IResponse = Array<{
   available: boolean;
 }>;
 
-injectable();
+@injectable()
 export default class ListProviderMonthAvailabilityService {
   constructor(
     @inject('AppointmentsRepository')

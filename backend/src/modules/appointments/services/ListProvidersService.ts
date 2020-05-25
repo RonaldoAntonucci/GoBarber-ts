@@ -8,7 +8,7 @@ interface IRequest {
   user_id: string;
 }
 
-injectable();
+@injectable()
 export default class ListProvidersService {
   constructor(
     @inject('UsersRepository')
