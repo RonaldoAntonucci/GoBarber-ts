@@ -15,7 +15,7 @@ import Button from '../../components/Button';
 
 import { Container, Content, AvatarInput } from './styles';
 
-interface ProfileFormDate {
+interface ProfileFormData {
   name: string;
   email: string;
   password: string;
@@ -31,7 +31,7 @@ const Profile: React.FC = () => {
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: ProfileFormDate): Promise<void> => {
+    async (data: ProfileFormData): Promise<void> => {
       try {
         formRef.current?.setErrors({});
 
